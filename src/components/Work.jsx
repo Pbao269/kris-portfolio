@@ -34,7 +34,7 @@ const works = [
     },
     {
       imgSrc: '/images/project-6.jpg',
-      title: 'eCommerce Website',
+      title: 'NFT Trading Website',
       tags: ['Web-design', 'HTML', 'CSS'],
       projectLink: 'https://github.com/Pbao269/eCommerce-Website'
     },
