@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef, useMemo } from "react"
 import PropTypes from "prop-types"
 
 const Navbar = ({ navOpen, onNavigate }) => {
 
   const lastActiveLink = useRef();
   const activeBox = useRef();
+  const sections = useRef({});
 
   const updateActiveBox = useCallback((element) => {
     if (!element || !activeBox.current) return;
@@ -34,7 +35,7 @@ const Navbar = ({ navOpen, onNavigate }) => {
     onNavigate?.();
   }
 
-  const navItems = [
+  const navItems = useMemo(() => [
     {
       label: 'Home',
       link: '#home',
@@ -56,7 +57,41 @@ const Navbar = ({ navOpen, onNavigate }) => {
       link: '#contact',
       className: 'nav-link md:hidden'
     }
-  ];
+  ], []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const link = sections.current[entry.target.id];
+            if (link && link !== lastActiveLink.current) {
+              lastActiveLink.current?.classList.remove('active');
+              link.classList.add('active');
+              lastActiveLink.current = link;
+              updateActiveBox(link);
+            }
+          }
+        });
+      },
+      {
+        rootMargin: '-45% 0px -55% 0px',
+        threshold: 0.15
+      }
+    );
+
+    navItems.forEach(({ link }) => {
+      const sectionId = link.replace('#', '');
+      const sectionEl = document.getElementById(sectionId);
+      if (sectionEl) {
+        sections.current[sectionId] = document.querySelector(`a[href="#${sectionId}"]`);
+        observer.observe(sectionEl);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, [navItems, updateActiveBox]);
+
   return (
     <nav className={'navbar ' + (navOpen ? 'active' : '')} id="site-nav" aria-label="Primary Navigation">
       {
