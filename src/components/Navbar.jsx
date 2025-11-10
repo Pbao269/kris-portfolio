@@ -1,29 +1,37 @@
-import { useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
 
-const Navbar = ({ navOpen }) => {
+const Navbar = ({ navOpen, onNavigate }) => {
 
   const lastActiveLink = useRef();
   const activeBox = useRef();
 
-  const initActiveBox = () => {
-    activeBox.current.style.top = lastActiveLink.current.offsetTop + 'px';
-    activeBox.current.style.left = lastActiveLink.current.offsetLeft + 'px';
-    activeBox.current.style.width = lastActiveLink.current.offsetWidth + 'px';
-    activeBox.current.style.height = lastActiveLink.current.offsetHeight + 'px';
-  }
-  useEffect(initActiveBox, []);
-  window.addEventListener('resize', initActiveBox);
+  const updateActiveBox = useCallback((element) => {
+    if (!element || !activeBox.current) return;
+    activeBox.current.style.top = element.offsetTop + 'px';
+    activeBox.current.style.left = element.offsetLeft + 'px';
+    activeBox.current.style.width = element.offsetWidth + 'px';
+    activeBox.current.style.height = element.offsetHeight + 'px';
+  }, []);
+
+  const initActiveBox = useCallback(() => {
+    updateActiveBox(lastActiveLink.current);
+  }, [updateActiveBox]);
+
+  useEffect(() => {
+    initActiveBox();
+    window.addEventListener('resize', initActiveBox);
+    return () => window.removeEventListener('resize', initActiveBox);
+  }, [initActiveBox]);
 
   const activeCurrentLink = (event) => {
     lastActiveLink.current?.classList.remove('active');
-    event.target.classList.add('active');
-    lastActiveLink.current = event.target;
+    const currentLink = event.currentTarget;
+    currentLink.classList.add('active');
+    lastActiveLink.current = currentLink;
 
-    activeBox.current.style.left = event.target.offsetLeft + 'px';
-    activeBox.current.style.width = event.target.offsetWidth + 'px';
-    activeBox.current.style.height = event.target.offsetHeight + 'px';
-    activeBox.current.style.top = event.target.offsetTop + 'px';
+    updateActiveBox(currentLink);
+    onNavigate?.();
   }
 
   const navItems = [
@@ -50,7 +58,7 @@ const Navbar = ({ navOpen }) => {
     }
   ];
   return (
-    <nav className={'navbar ' + (navOpen ? 'active' : '')}>
+    <nav className={'navbar ' + (navOpen ? 'active' : '')} id="site-nav" aria-label="Primary Navigation">
       {
       navItems.map(({label, link, className, ref}, key) =>
       (
@@ -67,7 +75,8 @@ const Navbar = ({ navOpen }) => {
 }
 
 Navbar.propTypes = {
-  navOpen: PropTypes.bool.isRequired
+  navOpen: PropTypes.bool.isRequired,
+  onNavigate: PropTypes.func
 }
 
 export default Navbar

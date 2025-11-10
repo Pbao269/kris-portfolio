@@ -30,7 +30,7 @@ const sitemap = [
     },
     {
       label: 'Instagram',
-      href: 'https://www.instagram.com/codewithsadee'
+      href: 'https://www.instagram.com/tgpbao/'
     },
   ];
   
@@ -78,7 +78,7 @@ const Footer = () => {
                         <ul>
                             {socials.map(({ label, href }, key) => (
                                 <li key={key}>
-                                    <a href={href} target="_blank" className="block text-sm text-zinc-400 py-1 transition-colors hover:text-zinc-200 reveal-up">
+                                    <a href={href} target="_blank" rel="noopener noreferrer" className="block text-sm text-zinc-400 py-1 transition-colors hover:text-zinc-200 reveal-up">
                                         {label}
                                     </a>
                                 </li>

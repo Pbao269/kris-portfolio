@@ -8,9 +8,10 @@ const ButtonPrimary = ({
     icon,
     classes
 }) => {
+    const relAttr = target === '_blank' ? 'noopener noreferrer' : undefined;
     if (href) {
         return (
-            <a href={href} target={target} className={"btn btn-primary " + classes}>
+            <a href={href} target={target} rel={relAttr} className={"btn btn-primary " + classes}>
                 {label}
 
                 {icon ?
@@ -52,9 +53,10 @@ const ButtonOutline = ({
     icon,
     classes
 }) => {
+    const relAttr = target === '_blank' ? 'noopener noreferrer' : undefined;
     if (href) {
         return (
-            <a href={href} target={target} className={"btn btn-outline " + classes}>
+            <a href={href} target={target} rel={relAttr} className={"btn btn-outline " + classes}>
                 {label}
 
                 {icon ?

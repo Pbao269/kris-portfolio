@@ -37,7 +37,7 @@ const Contact = () => {
 
                 <div className="flex items-center gap-2 mt-auto">
                     {socialLinks.map(({ href, icon }, key) => (
-                        <a key={key} href={href} target="_blank" 
+                        <a key={key} href={href} target="_blank" rel="noopener noreferrer"
                         className="w-12 h-12 grid place-items-center ring-inset ring-2 ring-zinc-50/5
                         rounded-lg transition-[background-color,color] hover:bg-zinc-50 hover:text-zinc-950
                         active:bg-zinc-50/80 reveal-up">
@@ -54,7 +54,7 @@ const Contact = () => {
                             Name
                         </label>
 
-                        <input type="text" name="namne" id="name"
+                        <input type="text" name="name" id="name"
                         autoComplete="name" required placeholder="Kris To" className="text-field reveal-up" />
                     </div>
 

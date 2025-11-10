@@ -17,7 +17,18 @@ import Footer from "./components/Footer";
 const App = () => {
 
 useGSAP(() => {
+  if (typeof window === 'undefined') return;
+
   const elements = gsap.utils.toArray('.reveal-up');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (prefersReducedMotion.matches) {
+    elements.forEach((element) => {
+      element.style.transform = 'translateY(0)';
+      element.style.opacity = 1;
+    });
+    return;
+  }
 
   elements.forEach((element) => {
     gsap.to(element, {

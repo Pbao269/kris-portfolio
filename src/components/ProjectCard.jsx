@@ -20,7 +20,7 @@ const ProjectCard = ({
                 </h3>
                 <div className="flex flex-wrap items-center gap-2">
                     {tags.map((label, key)=> (
-                        <span key={key} className="h-8 test-sm text-zinc-400 bg-zinc-50/5 grid items-center px-3 rounded-lg">
+                        <span key={key} className="h-8 text-sm text-zinc-400 bg-zinc-50/5 grid items-center px-3 rounded-lg">
                             {label}
                         </span>
                     ))}
@@ -35,7 +35,7 @@ const ProjectCard = ({
             </div>
         </div>
         
-        <a href={projectLink} target="_blank" className="absolute inset-0">
+        <a href={projectLink} target="_blank" rel="noopener noreferrer" className="absolute inset-0">
 
         </a>
     </div>
@@ -45,7 +45,7 @@ const ProjectCard = ({
 ProjectCard.propTypes = {
     imgSrc: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    tags: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
     projectLink: PropTypes.string,
     classes: PropTypes.string
 }
