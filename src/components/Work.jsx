@@ -12,7 +12,7 @@ const works = [
       imgSrc: '/images/project-2.jpg',
       title: 'Social Media Mobile App',
       tags: ['React Native', 'Supabase', 'Expo Go'],
-      projectLink: 'https://pixstock-official.vercel.app/'
+      projectLink: 'https://drive.google.com/file/d/14Y15vrtb_Q9Ui-X_yNquB0usL4RkMg48/'
     },
     {
       imgSrc: '/images/project-3.jpg',
